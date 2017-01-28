@@ -16,6 +16,7 @@ gem 'spree_address_book',                     github: 'spree-contrib/spree_addre
 gem 'aws-sdk',                                '< 2.0'
 gem 'spree_wishlist',                         github: 'spree-contrib/spree_wishlist',         branch: '3-0-stable'
 gem 'spree_email_to_friend',                  github: 'spree-contrib/spree_email_to_friend',  branch: '3-0-stable'
+gem 'sqlite3'
 
 group :assets do
   gem 'therubyracer',                         '~> 0.12.1', platforms: :ruby
