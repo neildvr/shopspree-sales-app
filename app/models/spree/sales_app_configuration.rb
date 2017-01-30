@@ -4,6 +4,7 @@ class Spree::SalesAppConfiguration < ActiveRecord::Base
     config = first
     if config
       # see if any part is outdated
+      logger.debug "KaShi commit"
       if config.updated_at < Spree::Taxon.order(updated_at: :desc).first.updated_at
         config.taxonomies_checksum = generate_taxonomies_checksum
       end

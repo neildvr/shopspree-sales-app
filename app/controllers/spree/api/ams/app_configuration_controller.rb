@@ -5,7 +5,9 @@ module Spree
         include Serializable
         include Requestable
 
+
         def show
+            logger.debug "KaShi commit"
           app_configuration = Spree::SalesAppConfiguration.get_latest_config
           render json: app_configuration, serializer: Spree::SalesAppConfigurationSerializer
         end

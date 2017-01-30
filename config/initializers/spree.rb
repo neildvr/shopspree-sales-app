@@ -13,34 +13,6 @@ Spree.config do |config|
   # Example:
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
-#  config.searcher_class = Spree::Search::Elasticsearch
 end
 
-Spree.user_class = "Spree::LegacyUser"
-
-attachment_config = {
-  s3_credentials: {
-    access_key_id: ENV['AWS_ACCESS_KEY'],
-    secret_access_key: ENV['AWS_SECRET_TOKEN'],
-    bucket: ENV['AWS_BUCKET']
-  },
-
-  storage:        :s3,
-  s3_protocol:    "https"
-}
-
-if Rails.env.production? || Rails.env.staging?
-  Paperclip::Attachment.default_options[:s3_protocol] = "https"
-
-  attachment_config.each do |key, value|
-    Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
-    Spree::Taxon.attachment_definitions[:icon][key.to_sym] = value
-    Spree::Banner.attachment_definitions[:image][key.to_sym] = value
-  end
-end
-
-
-Spree::Image.attachment_definitions[:attachment][:path] = '/spree/products/:id/:style/:basename.:extension'
-Spree::Taxon.attachment_definitions[:icon][:path] = '/spree/products/:id/:style/:basename.:extension'
-Spree::Banner.attachment_definitions[:image][:path] = '/spree/banners/:id/:style/:basename.:extension'
-Spree::Auth::Config[:confirmable] = true
+Spree.user_class = "Spree::User"
