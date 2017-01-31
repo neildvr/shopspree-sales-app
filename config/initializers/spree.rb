@@ -9,6 +9,7 @@
 #
 # In order to initialize a setting do:
 # config.setting_name = 'new value'
+
 Spree.config do |config|
   # Example:
   # Uncomment to stop tracking inventory levels in the application
@@ -37,6 +38,14 @@ if Rails.env.production? || Rails.env.staging?
         Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
         Spree::Taxon.attachment_definitions[:icon][key.to_sym] = value
         Spree::Banner.attachment_definitions[:image][key.to_sym] = value
+    end
+    
+    if ENV['BONSAI_URL']
+        Elasticsearch::Model.client = Elasticsearch::Client.new({url: ENV['BONSAI_URL'], logs: true})
+        BONSAI_INDEX_NAME = ENV['BONSAI_URL'][/[^\/]+$/]
+    else
+        app_name = Rails.application.class.parent_name.underscore.dasherize
+        BONSAI_INDEX_NAME = "#{app_name}-#{Rails.env}"
     end
 end
 
