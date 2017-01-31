@@ -24,10 +24,14 @@ attachment_config = {
     
     storage:        :s3,
     s3_protocol:    "https"
+    
 }
 
 if Rails.env.production? || Rails.env.staging?
     Paperclip::Attachment.default_options[:s3_protocol] = "https"
+    # config/initializers/paperclip.rb
+    Paperclip::Attachment.default_options[:url] = 'http://shopspree-testing.s3.ap-south-1.amazonaws.com/'
+    Paperclip::Attachment.default_options[:path] = '/:class/:attachment/:id_partition/:style/:filename'
     
     attachment_config.each do |key, value|
         Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
